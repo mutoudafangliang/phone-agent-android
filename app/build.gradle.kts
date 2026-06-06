@@ -69,9 +69,9 @@ dependencies {
     // Security Crypto (用于 SharedPreferences 加密存储)
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
-    // SpongyCastle (BouncyCastle 的 Android 替代，用于证书生成)
-    implementation("com.madgag.spongycastle:core:1.58.0.0")
-    implementation("com.madgag.spongycastle:pkix:1.58.0.0")
+    // BouncyCastle (用于证书生成，替代 SpongyCastle)
+    implementation("org.bouncycastle:bcprov-jdk18on:1.78")
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.78")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
