@@ -308,9 +308,8 @@ class CertificateGenerator(private val context: Context) {
             encodeBitString(pubKeyInfo)
         )
 
-        // 组装 TBSCertificate (version [0] 只包含版本号)
-        val tbsContent = encodeSequence(serialBytes, sigAlg, issuerBytes, validity, subjectBytes, spki)
-        return encodeExplicit0(version, tbsContent)
+        // 组装 TBSCertificate
+        return encodeExplicit0(version, serialBytes, sigAlg, issuerBytes, validity, subjectBytes, spki)
     }
 
     /**
@@ -331,12 +330,9 @@ class CertificateGenerator(private val context: Context) {
         return buildDER(0x30, *elements)
     }
 
-    private fun encodeExplicit0(version: ByteArray, content: ByteArray): ByteArray {
-        // version [0] EXPLICIT - 只包装 version Integer
-        val versionContent = encodeSequence(version)
-        val versionTag = byteArrayOf(0xA0.toByte()) + encodeLength(versionContent.size) + versionContent
-        // 后面跟着其他字段
-        return versionTag + content
+    private fun encodeExplicit0(vararg elements: ByteArray): ByteArray {
+        val inner = encodeSequence(*elements)
+        return byteArrayOf(0xA0.toByte(), inner.size.toByte()) + inner
     }
 
     private fun encodeOID(oidStr: String): ByteArray {
@@ -396,9 +392,9 @@ class CertificateGenerator(private val context: Context) {
     private fun encodeLength(length: Int): ByteArray {
         return when {
             length < 0x80 -> byteArrayOf(length.toByte())
-            length < 0x100 -> byteArrayOf(0x81.toByte(), (length and 0xFF).toByte())
-            length < 0x10000 -> byteArrayOf(0x82.toByte(), ((length shr 8) and 0xFF).toByte(), (length and 0xFF).toByte())
-            else -> byteArrayOf(0x83.toByte(), ((length shr 16) and 0xFF).toByte(), ((length shr 8) and 0xFF).toByte(), (length and 0xFF).toByte())
+            length < 0x100 -> byteArrayOf(0x81.toByte(), length.toByte())
+            length < 0x10000 -> byteArrayOf(0x82.toByte(), (length shr 8).toByte(), length.toByte())
+            else -> byteArrayOf(0x83.toByte(), (length shr 16).toByte(), (length shr 8).toByte(), length.toByte())
         }
     }
 
