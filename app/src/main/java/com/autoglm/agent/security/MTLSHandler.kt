@@ -191,7 +191,7 @@ class MTLSHandler(private val context: Context) {
             .connectionSpecs(listOf(
                 ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
                     .tlsVersions(TLS_V12, TLS_V13)
-                    .cipherSuites(CIPHER_SUITES.map { it.javaName }.toTypedArray())
+                    .cipherSuites(*CIPHER_SUITES.toTypedArray())
                     .build()
             ))
             .build()
@@ -204,7 +204,7 @@ class MTLSHandler(private val context: Context) {
         return listOf(
             ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
                 .tlsVersions(TLS_V12, TLS_V13)
-                .cipherSuites(CIPHER_SUITES.map { it.javaName }.toTypedArray())
+                .cipherSuites(*CIPHER_SUITES.toTypedArray())
                 .build(),
             ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
                 .tlsVersions(TLS_V12)
