@@ -2,7 +2,6 @@ package com.autoglm.agent.security
 
 import android.content.Context
 import android.util.Log
-import okhttp3.CertificateChainAuthenticator
 import okhttp3.CipherSuite
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
@@ -116,7 +115,7 @@ class MTLSHandler(private val context: Context) {
             "server",
             serverKey,
             "".toCharArray(), // keystore 内部密码
-            arrayOf(serverCert, caCert)
+            arrayOf<java.security.cert.Certificate>(serverCert, caCert)
         )
         
         val kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
@@ -183,8 +182,12 @@ class MTLSHandler(private val context: Context) {
             java.security.SecureRandom()
         )
         
+        // 获取 X509TrustManager
+        val x509TrustManager = trustManagerFactory.trustManagers?.find { it is X509TrustManager } as? X509TrustManager
+            ?: throw IllegalStateException("未找到 X509TrustManager")
+        
         return OkHttpClient.Builder()
-            .sslSocketFactory(newSSLContext.socketFactory, trustManagerFactory.trustManagers[0] as X509TrustManager)
+            .sslSocketFactory(newSSLContext.socketFactory, x509TrustManager)
             .connectionSpecs(listOf(
                 ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
                     .tlsVersions(TLS_V12, TLS_V13)

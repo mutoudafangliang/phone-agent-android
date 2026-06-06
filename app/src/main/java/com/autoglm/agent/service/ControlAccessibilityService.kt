@@ -18,9 +18,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import android.app.INotificationManager
 import android.content.Context
-import android.notification
 
 /**
  * 控制无障碍服务
@@ -83,7 +81,7 @@ class ControlAccessibilityService : AccessibilityService() {
                     android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
             notificationTimeout = 100
         }
-        serviceInfo = serviceInfo
+        this.serviceInfo = serviceInfo
     }
     
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {

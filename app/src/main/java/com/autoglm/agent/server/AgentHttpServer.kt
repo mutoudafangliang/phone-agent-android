@@ -547,8 +547,8 @@ class AgentHttpServer(
         val token = extractToken(session)
         if (!validateToken(token)) return unauthorizedResponse()
         
-        authManager?.revokeSessionToken(token)
-        auditLogger?.logSuccess("DISCONNECT", "会话断开", clientIp, token)
+        authManager?.revokeSessionToken(token!!)
+        auditLogger?.logSuccess("DISCONNECT", "会话断开", clientIp, token!!)
         
         return successResponse("Disconnected")
     }
@@ -605,7 +605,8 @@ class AgentHttpServer(
     private fun parsePostParams(session: IHTTPSession): JSONObject {
         val params = JSONObject()
         try {
-            session.parseBody()
+            val files = mutableMapOf<String, String>()
+            session.parseBody(files)
             val postBody = session.queryParameterString
             if (!postBody.isNullOrEmpty()) {
                 val pairs = postBody.split("&")

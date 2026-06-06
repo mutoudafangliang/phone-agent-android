@@ -188,7 +188,7 @@ class AuthManager(context: Context) {
         val bytes = ByteArray(TOKEN_BYTES)
         random.nextBytes(bytes)
         
-        val base64 = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes)
+        val base64 = Base64.encodeToString(bytes, Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP)
         return "$TOKEN_PREFIX$base64"
     }
     

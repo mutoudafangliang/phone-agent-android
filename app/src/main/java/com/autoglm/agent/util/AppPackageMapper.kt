@@ -10,7 +10,7 @@ object AppPackageMapper {
      * APP 名称到包名的映射
      * 使用小写作为 key，方便匹配
      */
-    private val nameToPackage = mapOf(
+    internal val nameToPackage = mapOf(
         // 即时通讯
         "微信" to "com.tencent.mm",
         "wechat" to "com.tencent.mm",
