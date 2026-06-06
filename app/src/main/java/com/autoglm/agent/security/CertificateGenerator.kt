@@ -344,7 +344,7 @@ class CertificateGenerator(private val context: Context) {
         // remaining components in base-128
         for (i in 2 until parts.size) {
             var value = parts[i].toLong()
-            if (value == 0) {
+            if (value == 0L) {
                 bytes.add(0)
             } else {
                 val temp = mutableListOf<Byte>()

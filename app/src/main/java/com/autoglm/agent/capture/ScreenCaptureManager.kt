@@ -246,10 +246,6 @@ class ScreenCaptureManager(private val context: Context) {
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                 reader.surface,
                 object : VirtualDisplay.Callback() {
-                    override fun onResized() {
-                        Log.d(TAG, "VirtualDisplay 尺寸变化")
-                    }
-                    
                     override fun onPaused() {
                         Log.d(TAG, "VirtualDisplay 暂停")
                     }

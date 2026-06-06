@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
+import android.view.LayoutInflater
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
