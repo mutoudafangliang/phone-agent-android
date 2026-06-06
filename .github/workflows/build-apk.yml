@@ -35,3 +35,10 @@ jobs:
           name: phone-agent-android-debug
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 30
+
+      - name: Upload to Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete latest --yes 2>/dev/null || true
+          gh release create latest --title "AutoGLM Agent APK" --notes "Automated build from commit ${{ github.sha }}" app/build/outputs/apk/debug/*.apk
