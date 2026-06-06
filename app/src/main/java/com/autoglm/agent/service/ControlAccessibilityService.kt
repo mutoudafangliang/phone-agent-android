@@ -419,7 +419,7 @@ class ControlAccessibilityService : AccessibilityService() {
      * 查找指定坐标位置的节点
      */
     fun findNodeAtPosition(x: Int, y: Int): AccessibilityNodeInfo? {
-        return rootInActiveWindow?.findAccessibilityNodeInfosByViewContainsText("")?.firstOrNull()
+        return rootInActiveWindow?.findAccessibilityNodeInfosByText("", false)?.firstOrNull()
     }
     
     /**
