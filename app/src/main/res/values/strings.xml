@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhoneAgent</string>
+    <string name="app_description">远程手机控制 Agent</string>
+
+    <!-- 主界面 -->
+    <string name="status_idle">空闲</string>
+    <string name="status_running">运行中</string>
+    <string name="status_error">错误</string>
+
+    <!-- 服务状态 -->
+    <string name="server_status_stopped">HTTP 服务已停止</string>
+    <string name="server_status_running">HTTP 服务运行中</string>
+    <string name="server_address">服务地址: %s</string>
+    <string name="accessibility_status">无障碍服务: %s</string>
+    <string name="capture_status">截屏权限: %s</string>
+
+    <!-- PIN 码 -->
+    <string name="pin_not_set">PIN 未设置</string>
+    <string name="pin_set">PIN 已设置</string>
+    <string name="pin_hint">请输入 6 位 PIN 码</string>
+    <string name="pin_confirm_hint">请确认 PIN 码</string>
+    <string name="pin_mismatch">两次输入不一致</string>
+    <string name="pin_too_short">PIN 码长度必须为 6 位</string>
+    <string name="pin_set_success">PIN 码设置成功</string>
+
+    <!-- 证书 -->
+    <string name="cert_not_generated">证书未生成</string>
+    <string name="cert_generated">证书已生成</string>
+    <string name="cert_generating">正在生成证书…</string>
+    <string name="generate_cert">生成证书</string>
+    <string name="cert_generated_success">证书生成成功</string>
+
+    <!-- 启动/停止 -->
+    <string name="start_server">启动服务</string>
+    <string name="stop_server">停止服务</string>
+    <string name="start_server_desc">启动 HTTP 服务器接受远程控制</string>
+    <string name="stop_server_desc">停止 HTTP 服务器</string>
+
+    <!-- 权限请求 -->
+    <string name="request_accessibility">请求无障碍权限</string>
+    <string name="request_capture">请求截屏权限</string>
+    <string name="accessibility_permission_required">需要开启无障碍服务才能执行控制操作</string>
+    <string name="capture_permission_required">需要截屏权限才能获取屏幕画面</string>
+
+    <!-- 通知 -->
+    <string name="notification_channel_name">PhoneAgent 运行中</string>
+    <string name="notification_channel_desc">保持 Agent 服务在后台运行</string>
+    <string name="notification_title">PhoneAgent 运行中</string>
+    <string name="notification_text">服务地址: %s</string>
+
+    <!-- 安全 -->
+    <string name="security_info">安全信息</string>
+    <string name="device_fingerprint">设备指纹: %s</string>
+    <string name="mtls_enabled">mTLS 双向认证: 已启用</string>
+    <string name="pin_enabled">PIN 码保护: 已启用</string>
+
+    <!-- 审计日志 -->
+    <string name="audit_log">审计日志</string>
+    <string name="clear_audit_log">清除日志</string>
+
+    <!-- 操作按钮 -->
+    <string name="action_settings">设置</string>
+    <string name="action_refresh">刷新状态</string>
+    <string name="action_export_cert">导出证书</string>
+    <string name="action_view_fingerprint">查看设备指纹</string>
+
+    <!-- 错误信息 -->
+    <string name="error_server_start">服务启动失败: %s</string>
+    <string name="error_no_permission">权限不足</string>
+    <string name="error_cert_not_ready">证书未就绪</string>
+    <string name="error_pin_not_set">请先设置 PIN 码</string>
+
+    <!-- 操作结果 -->
+    <string name="operation_success">操作成功</string>
+    <string name="operation_failed">操作失败: %s</string>
+    <string name="sensitive_blocked">敏感操作被拦截</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    无障碍服务配置文件
+    声明 PhoneAgent 需要的手势和窗口访问能力
+    用户需要在系统设置 > 无障碍 > PhoneAgent 中手动开启
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows|flagReportViewIds"
+    android:canPerformGestures="true"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/accessibility_permission_required"
+    android:notificationTimeout="100"
+    android:settingsActivity="com.autoglm.agent.MainActivity" />

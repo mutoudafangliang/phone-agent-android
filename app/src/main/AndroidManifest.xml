@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    PhoneAgent Android Manifest
+    远程手机控制 Agent 的清单文件
+    定义所有权限、服务和组件声明
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ==================== 网络权限 ==================== -->
+    <!-- 允许创建 HTTP Server 接收远程请求 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许访问网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- ==================== 截屏权限 ==================== -->
+    <!-- MediaProjection 截屏需要的两步授权之一 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+
+    <!-- ==================== 无障碍服务权限 ==================== -->
+    <!-- 需要用户手动在设置中开启 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- ==================== 设备指纹绑定 ==================== -->
+    <!-- 读取设备信息用于生成唯一指纹 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- ==================== 前台服务常驻通知 ==================== -->
+    <!-- Agent 运行时保持运行，阻止系统杀死 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- ==================== 启动应用权限 ==================== -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
+    <!-- 声明使用特殊权限，需要用户授权 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".PhoneAgentApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PhoneAgent"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="34">
+
+        <!-- ==================== 主界面 ==================== -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ==================== 截屏权限请求界面 ==================== -->
+        <activity
+            android:name=".capture.CapturePermissionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PhoneAgent" />
+
+        <!-- ==================== 无障碍服务 ==================== -->
+        <!-- ControlAccessibilityService 负责执行点击、滑动、输入等手势操作 -->
+        <service
+            android:name=".service.ControlAccessibilityService"
+            android:exported="false"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- ==================== 前台服务 ==================== -->
+        <!-- AgentForegroundService 保持 App 在前台运行，阻止系统回收 -->
+        <service
+            android:name=".service.AgentForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
+
+        <!-- ==================== mTLS HTTPS Server (可选，使用 NanoHTTPD 的 SSL 模式) ==================== -->
+        <!-- NanoHTTPD 支持自定义 SSLSocketFactory 实现 mTLS -->
+    </application>
+
+</manifest>
