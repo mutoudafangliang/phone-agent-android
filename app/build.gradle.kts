@@ -66,12 +66,10 @@ dependencies {
     // OkHttp (用于 mTLS，需要 SSLSocketFactory)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
-    // Security Crypto (用于 SharedPreferences 加密存储)
+    // Security Crypto (SharedPreferences 加密存储)
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
-    // BouncyCastle (用于证书生成，替代 SpongyCastle)
-    implementation("org.bouncycastle:bcprov-jdk18on:1.78")
-    implementation("org.bouncycastle:bcpkix-jdk18on:1.78")
+    // 证书生成使用纯 Java/Android 内置 API，无第三方加密库依赖
 
     // Testing
     testImplementation("junit:junit:4.13.2")
