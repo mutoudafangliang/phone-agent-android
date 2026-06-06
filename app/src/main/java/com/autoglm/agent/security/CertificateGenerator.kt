@@ -327,8 +327,7 @@ class CertificateGenerator(private val context: Context) {
     // ---- DER 编码辅助方法 ----
 
     private fun encodeSequence(vararg elements: ByteArray): ByteArray {
-        val totalLen = elements.sumOf { it.size }
-        return buildDER(0x30, totalLen, *elements)
+        return buildDER(0x30, *elements)
     }
 
     private fun encodeExplicit0(vararg elements: ByteArray): ByteArray {
@@ -358,7 +357,7 @@ class CertificateGenerator(private val context: Context) {
                 bytes.addAll(temp)
             }
         }
-        return buildDER(0x06, bytes.size, *bytes.toByteArray())
+        return buildDER(0x06, bytes.toByteArray())
     }
 
     private fun encodeInteger(value: BigInteger): ByteArray {
@@ -368,23 +367,23 @@ class CertificateGenerator(private val context: Context) {
             byteArrayOf(0x00) + bytes
         } else {
             bytes
-        }.let { buildDER(0x02, it.size, *it) }
+        }.let { buildDER(0x02, it) }
     }
 
     private fun encodeUTCTime(date: Date): ByteArray {
         val sdf = java.text.SimpleDateFormat("yyMMddHHmmss'Z'")
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         val timeStr = sdf.format(date).toByteArray(Charsets.US_ASCII)
-        return buildDER(0x17, timeStr.size, *timeStr)
+        return buildDER(0x17, timeStr)
     }
 
     private fun encodeBitString(bytes: ByteArray): ByteArray {
         // BIT STRING: tag 03, 0 unused bits at end
         val content = byteArrayOf(0x00) + bytes
-        return buildDER(0x03, content.size, *content)
+        return buildDER(0x03, content)
     }
 
-    private fun buildDER(tag: Int, contentLen: Int, vararg content: ByteArray): ByteArray {
+    private fun buildDER(tag: Int, vararg content: ByteArray): ByteArray {
         val allContent = content.fold(ByteArray(0)) { acc, arr -> acc + arr }
         val lenBytes = encodeLength(allContent.size)
         return byteArrayOf(tag.toByte()) + lenBytes + allContent
